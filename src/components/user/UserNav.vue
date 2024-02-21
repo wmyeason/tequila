@@ -12,9 +12,9 @@
       <a-menu-item key="2"
         ><router-link to="/user/security"><a-icon type="lock" /> 安全设置</router-link></a-menu-item
       >
-      <a-menu-item key="3"
-        ><router-link to="/user/message"> <a-icon type="message" />消息中心</router-link></a-menu-item
-      >
+<!--      <a-menu-item key="3"-->
+<!--        ><router-link to="/user/message"> <a-icon type="message" />消息中心</router-link></a-menu-item-->
+<!--      >-->
     </a-menu>
   </div>
 </template>

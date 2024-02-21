@@ -18,7 +18,7 @@ import UserMessageView from './components/user/UserMessageView'
 import View404 from './components/exception/View404'
 import View500 from './components/exception/View500'
 // admin
-import UserView from './components/admin/user/UserView'
+// import UserView from './components/admin/user/UserView'
 import UserAddView from './components/admin/user/UserAddView'
 import AdminBoardView from './components/admin/board/AdminBoardView'
 import AdminPostView from './components/admin/post/AdminPostView'
@@ -27,6 +27,8 @@ import AdminTalkView from './components/admin/talk/AdminTalkView'
 import AdminTestView from './components/admin/test/AdminTestView'
 import AdminTestResultView from './components/admin/test/AdminTestResultView'
 import AdminChatView from './components/admin/chat/AdminChatView'
+import AllUserListView from "@/components/admin/user/AllUserListView.vue";
+import reservationConsult from "@/components/reservation/reservationConsult.vue";
 
 Vue.use(Router)
 
@@ -43,6 +45,10 @@ export default new Router({
         {
           path: '/board',
           component: BoardView
+        },
+        {
+          path: '/reservationConsult',
+          component: reservationConsult
         },
         {
           path: '/posts',
@@ -104,7 +110,8 @@ export default new Router({
       children: [
         {
           path: 'user',
-          component: UserView
+          component: AllUserListView
+          // component: UserView
         },
         {
           path: 'user/add',

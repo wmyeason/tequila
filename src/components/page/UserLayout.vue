@@ -19,9 +19,19 @@
           <router-link to="/posts"><a-icon type="read" /> 文章 </router-link>
         </a-menu-item>
 
+        <a-menu-item key="reservation">
+          <router-link to="/reservationConsult"> <a-icon type="user" />咨询预约</router-link>
+        </a-menu-item>
+
         <a-menu-item key="test">
           <router-link to="/test/intro">
             <a-icon type="project" /> 在线测评</router-link
+          >
+        </a-menu-item>
+
+        <a-menu-item key="message">
+          <router-link to="/user/message">
+            <a-icon type="message" /> 消息中心</router-link
           >
         </a-menu-item>
 
@@ -31,12 +41,14 @@
           >
         </a-menu-item>
 
-        <a-menu-item key="profile">
+        <a-menu-item key="profile"  v-show="!showAdmin">
           <router-link to="/user"> <a-icon type="user" />个人中心</router-link>
         </a-menu-item>
 
         <a-menu-item key="dashboard" v-show="showAdmin">
-          <router-link to="/admin"> <a-icon type="project" />后台管理</router-link>
+          <a href="/admin" target="_blank">
+          <a-icon type="project" />后台管理
+          </a>
         </a-menu-item>
 
         <a-menu-item style="float: right" @click="logout">

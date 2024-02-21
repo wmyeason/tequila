@@ -12,11 +12,17 @@
     <a-input
       size="large"
       type="password"
-      autocomplete="false"
       placeholder="密码"
       v-model="inputPassword"
+      autocomplete="new-password"
       style="width: 300px; margin: 8px 0; display: block"
     ></a-input>
+
+
+    <div>
+      <span>是否是 咨询师</span>
+      <a-switch v-model="IsConsult" un-checked-children="否" checked-children="是" />
+    </div>
 
     <a-alert
       v-if="isRegisterError"
@@ -52,7 +58,7 @@ export default {
       inputEmail: "",
       inputPassword: "",
       isRegisterError: false,
-
+      IsConsult:false,
       registerBtn: false
     };
   },
@@ -61,7 +67,8 @@ export default {
       axios
         .post(api.Register, {
           username: this.inputEmail,
-          password: this.inputPassword
+          password: this.inputPassword,
+          isConsult:this.IsConsult
         }, {
           headers: { Authorization: localStorage.token }
         })

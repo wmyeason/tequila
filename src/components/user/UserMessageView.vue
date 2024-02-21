@@ -1,6 +1,6 @@
 <template>
   <div class="account-main">
-    <div class="account-left"><UserNav skey="3"></UserNav></div>
+<!--    <div class="account-left"><UserNav skey="3"></UserNav></div>-->
     <div class="account-right">
       <div class="account-title">消息中心</div>
 
@@ -54,11 +54,11 @@
 <script>
 import api from "@/api/index";
 import axios from "axios";
-import UserNav from "./UserNav";
+// import UserNav from "./UserNav";
 import MsgItem from "./MsgItem";
 export default {
   components: {
-    UserNav,
+    // UserNav,
     MsgItem
   },
   data() {

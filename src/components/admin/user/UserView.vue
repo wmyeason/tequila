@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="title">用户列表</div>
+<!--    <div class="title">用户列表</div>-->
     <a-table :columns="columns" :dataSource="data" bordered>
       <template
         v-for="col in ['username', 'nickname']"
@@ -28,16 +28,7 @@
       </template>
       <template slot="operation" slot-scope="text, record">
         <div class="editable-row-operations">
-          <span v-if="record.editable">
-            <a @click="() => save(record.key)">保存</a>
-            <a-popconfirm
-              title="确定取消编辑吗？"
-              @confirm="() => cancel(record.key)"
-            >
-              <a>取消</a>
-            </a-popconfirm>
-          </span>
-          <span v-else>
+          <span>
             <a @click="() => edit(record.key)">编辑</a>
           </span>
           <span>
@@ -46,11 +37,16 @@
         </div>
       </template>
     </a-table>
+    <a-modal :visible="modalVisible" title="编辑用户信息" :footer="null" @cancel="modalVisible=false;">
+      <UserEdit :rowData="userRowData" :key="commentKeys" @requestComplete="closeParent" />
+    </a-modal>
   </div>
 </template>
 <script>
 import api from "@/api/index";
 import axios from "axios";
+import UserEdit from "./UserEditView.vue";
+
 const columns = [
   {
     title: "用户名/邮箱",
@@ -87,8 +83,20 @@ export default {
   data() {
     return {
       data: [],
+      userRowData:{},
+      modalVisible:false,
+      commentKeys:1,
       columns
     };
+  },
+  components:{
+    UserEdit
+  },
+  props: {
+    rowData: {
+      type: Number, // 数据类型为Object
+      required: true // 表示该属性是必需的
+    }
   },
   mounted() {
     this.fetchData();
@@ -97,7 +105,8 @@ export default {
     fetchData() {
       axios
         .get(api.User, {
-          headers: { Authorization: localStorage.token }
+          headers: { Authorization: localStorage.token },
+          params:{type:this.rowData}
         })
         .then(response => {
           this.data = response.data.data;
@@ -120,32 +129,17 @@ export default {
     },
     edit(key) {
       const newData = [...this.data];
-      const target = newData.filter(item => key === item.key)[0];
-      if (target) {
-        target.editable = true;
-        this.data = newData;
-      }
+      this.modalVisible =true;
+      this.userRowData = newData.filter(item => key === item.key)[0];
+      this.commentKeys++;//值增加  保证每次 打开子组件时 都重新加载
+      // if (target) {
+      //   target.editable = true;
+      //   this.data = newData;
+      // }
     },
-    save(key) {
-      const newData = [...this.data];
-      const target = newData.filter(item => key === item.key)[0];
-      if (target) {
-        delete target.editable;
-        this.data = newData;
-        this.updateUser(target);
-      }
-    },
-    cancel(key) {
-      const newData = [...this.data];
-      const target = newData.filter(item => key === item.key)[0];
-      if (target) {
-        Object.assign(
-          target,
-          this.cacheData.filter(item => key === item.key)[0]
-        );
-        delete target.editable;
-        this.data = newData;
-      }
+    closeParent(){
+      this.modalVisible=false;
+      window.location.reload();
     },
     del(key) {
       axios

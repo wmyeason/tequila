@@ -3,40 +3,53 @@
     <div class="account-left"><UserNav skey="1"></UserNav></div>
     <div class="account-right">
       <div class="account-title">基础设置</div>
-      <div class="setting" style="margin-bottom: 16px">
-        <label>昵称</label><br>
-        <a-input placeholder="给自己起个名字" v-model="nickname" style="width: 300px"></a-input>
-      </div>
+<!--      <div class="setting" style="margin-bottom: 16px">-->
+<!--        <label>昵称</label><br>-->
+<!--        <a-input placeholder="给自己起个名字" v-model="nickname" style="width: 300px"></a-input>-->
+<!--      </div>-->
 
-      <div class="setting" style="margin-bottom: 16px">
-        <label>邮箱</label><br>
-        <a-input v-model="username" disabled style="width: 300px"></a-input>
-      </div>
+<!--      <div class="setting" style="margin-bottom: 16px">-->
+<!--        <label>邮箱</label><br>-->
+<!--        <a-input v-model="username" disabled style="width: 300px"></a-input>-->
+<!--      </div>-->
 
-      <div class="setting" style="margin-bottom: 16px">
-        <label>年龄</label><br>
-        <a-input
-          placeholder="请输入年龄"
-          v-model="age"
-          :maxLength="25"
-          style="width: 120px"
-        ></a-input>
-      </div>
+<!--      <div class="setting" style="margin-bottom: 16px">-->
+<!--        <label>年龄</label><br>-->
+<!--        <a-input-->
+<!--          placeholder="请输入年龄"-->
+<!--          v-model="age"-->
+<!--          :maxLength="25"-->
+<!--          style="width: 120px"-->
+<!--        ></a-input>-->
+<!--      </div>-->
 
-      <div class="setting" style="margin-bottom: 16px">
-        <label>性别</label> <br />
-        <a-select
-          defaultValue="请选择性别"
-          style="width: 120px"
-          v-model="gender"
-        >
-          <a-select-option value="">保密</a-select-option>
-          <a-select-option value="M">男</a-select-option>
-          <a-select-option value="F">女</a-select-option>
-        </a-select>
-      </div>
+<!--      <div>-->
+<!--        <label>联系方式</label> <br />-->
+<!--        <a-input-->
+<!--            size="large"-->
+<!--            type="text"-->
+<!--            placeholder="联系方式"-->
+<!--            v-model="editContactInfo"-->
+<!--            style="width: 300px; margin: 8px 0"-->
+<!--        ></a-input>-->
+<!--      </div>-->
 
-      <a-button type="primary" style="float: right" @click="submit">更新设置</a-button>
+<!--      <div class="setting" style="margin-bottom: 16px">-->
+<!--        <label>性别</label> <br />-->
+<!--        <a-select-->
+<!--          defaultValue="请选择性别"-->
+<!--          style="width: 120px"-->
+<!--          v-model="gender"-->
+<!--        >-->
+<!--          <a-select-option value="">保密</a-select-option>-->
+<!--          <a-select-option value="M">男</a-select-option>-->
+<!--          <a-select-option value="F">女</a-select-option>-->
+<!--        </a-select>-->
+<!--      </div>-->
+
+<!--      <a-button type="primary" style="float: right" @click="submit">更新设置</a-button>-->
+
+      <div ><UserEdit :rowData="rowData" :key="commentKeys" /></div>
     </div>
   </div>
 </template>
@@ -45,8 +58,10 @@
 import api from '@/api/index'
 import axios from 'axios'
 import UserNav from "./UserNav";
+import UserEdit from "@/components/admin/user/UserEditView.vue";
 export default {
   components: {
+    UserEdit,
     UserNav
   },
   data() {
@@ -54,7 +69,10 @@ export default {
       nickname: "",
       username: localStorage.username,
       age: "",
-      gender: ""
+      gender: "",
+      editContactInfo:"",
+      rowData:{},
+      commentKeys:1,
     };
   },
   methods: {
@@ -68,7 +86,8 @@ export default {
         username: this.username,
         nickname: this.nickname,
         age: this.age,
-        gender: this.gender
+        gender: this.gender,
+        contactInfo:this.editContactInfo
       }, {
         headers: { Authorization: localStorage.token }
       })
@@ -77,7 +96,23 @@ export default {
           this.$message.success('资料更新成功')
         }
       })
+    },
+    async initData(){
+      axios
+      .get(api.User + '/' + localStorage.userId, {
+        headers: { Authorization: localStorage.token }
+      })
+      .then(response => {
+        if (response.data.code == 1) {
+          this.rowData = response.data.data;
+          this.rowData.id = localStorage.userId;
+        }
+      })
     }
+  },
+  mounted() {
+    this.initData()
+
   }
 };
 </script>
@@ -111,7 +146,7 @@ export default {
   }
 
   .account-right {
-    flex: 1 1;
+    flex: 2 2;
     padding: 8px 40px;
     margin-left: 16px;
 
