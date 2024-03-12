@@ -29,6 +29,7 @@ import AdminTestResultView from './components/admin/test/AdminTestResultView'
 import AdminChatView from './components/admin/chat/AdminChatView'
 import AllUserListView from "@/components/admin/user/AllUserListView.vue";
 import reservationConsult from "@/components/reservation/reservationConsult.vue";
+import manageReservationConsult from "@/components/reservation/manageReservationConsult.vue";
 
 Vue.use(Router)
 
@@ -49,6 +50,10 @@ export default new Router({
         {
           path: '/reservationConsult',
           component: reservationConsult
+        },
+        {
+          path: '/manageReservationConsult',
+          component: manageReservationConsult
         },
         {
           path: '/posts',

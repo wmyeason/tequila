@@ -19,8 +19,12 @@
           <router-link to="/posts"><a-icon type="read" /> 文章 </router-link>
         </a-menu-item>
 
-        <a-menu-item key="reservation">
+        <a-menu-item key="reservation" v-if="!showConsult">
           <router-link to="/reservationConsult"> <a-icon type="user" />咨询预约</router-link>
+        </a-menu-item>
+
+        <a-menu-item key="reservation" v-if="showConsult&&!showAdmin">
+          <router-link to="/manageReservationConsult"> <a-icon type="user" />预约管理</router-link>
         </a-menu-item>
 
         <a-menu-item key="test">
@@ -68,7 +72,7 @@
       </a-row>
     </a-layout-content>
     <a-layout-footer style="text-align: center">
-      CPCP 高校心理资讯平台 ©2020
+      CPCP 高校心理资讯平台 ©2024
     </a-layout-footer>
   </a-layout>
 </template>
@@ -80,11 +84,14 @@ export default {
     return {
       current: [""],
       username: localStorage.username,
-      showAdmin: false
+      showAdmin: false,
+      showConsult:false
+
     };
   },
   mounted() {
     this.showAdmin = localStorage.userStatus == 999 ? true : false;
+    this.showConsult = localStorage.isConsultant ==="1";
   },
   methods: {
     logout() {

@@ -207,8 +207,7 @@ export default {
         }
       }
 
-      axios
-          .post(api.User + "/editUserInfoByAdmin", data, {
+      axios.post(api.User + "/editUserInfoByAdmin", data, {
             headers: {Authorization: localStorage.token}
           })
           .then(response => {
@@ -225,8 +224,7 @@ export default {
       if(this.editId == null || this.editId === ''){
         this.editId = localStorage.userId;
       }
-      axios
-          .get(api.User+"/getExtendUserInfoByAdmin", {
+      axios.get(api.User+"/getExtendUserInfoByAdmin", {
           // .get(api.User + "/getExtendUserInfoByAdmin/"+this.editId+"/"+this.isConsultant, {
             headers: {Authorization: localStorage.token},
             params: {
@@ -237,8 +235,6 @@ export default {
           .then(response => {
             var code = response.data.code;
             if (code == 1) {
-              console.log("response.data.data.professionField");
-              console.log(response.data);
               this.professionField = response.data.data.professionField;
               this.education = response.data.data.education;
               this.graduationSchool = response.data.data.graduationSchool;

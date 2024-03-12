@@ -9,6 +9,7 @@ const api = {
   User: base + '/user',
   Talk: base + '/talk',
   Message: base + '/message',
-  MessageUser: base + '/message/user'
-}
+  MessageUser: base + '/message/user',
+  Reservation:base+'/reservation',
+ }
 export default api;

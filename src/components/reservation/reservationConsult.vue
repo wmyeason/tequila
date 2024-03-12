@@ -1,145 +1,166 @@
 <template>
   <div>
-<!--    <div class="title">用户列表</div>-->
-    <a-table :columns="columns" :dataSource="data" bordered>
-      <template
-        v-for="col in ['username', 'nickname']"
-        :slot="col"
-        slot-scope="text, record"
-      >
-        <div :key="col">
-          <a-input
-            v-if="record.editable"
-            style="margin: -5px 0"
-            :value="text"
-            @change="e => handleChange(e.target.value, record.key, col)"
-          />
-          <template v-else>{{ text }}</template>
-        </div>
-      </template>
-      <template slot="age" slot-scope="record">
-        <div v-if="!record">未知</div>
-        {{ record }}
-      </template>
-      <template slot="gender" slot-scope="record">
-        <div v-if="!record">未知</div>
-        {{ record == "MALE" ? '男' : ''}}
-        {{ record == "FEMALE" ? '女' : ''}}
-      </template>
-      <template slot="operation" slot-scope="text, record">
-        <div class="editable-row-operations">
-          <span>
-            <a @click="() => edit(record.key)">预约</a>
-          </span>
-        </div>
-      </template>
-    </a-table>
+  <el-table
+      ref="singleTable"
+      :data="item"
+      highlight-current-row
+      style="width: 100%">
+    <el-table-column
+        type="index"
+        width="50">
+    </el-table-column>
+    <el-table-column
+        prop="userEntity.username"
+        label="咨询师名称"
+        width="120">
+    </el-table-column>
+    <el-table-column
+        prop="userEntity.gender"
+        label="性别"
+        width="120">
+    </el-table-column>
+    <el-table-column
+        prop="userEntity.age"
+        label="年龄">
+    </el-table-column>
+    <el-table-column
+        prop="userEntity.contactInfo"
+        label="联系方式">
+    </el-table-column>
+    <el-table-column
+        prop="consultInfo.professionField"
+        label="专业领域">
+    </el-table-column>
+    <el-table-column
+        prop="consultInfo.personalProfile"
+        label="个人简介">
+    </el-table-column>
 
-  </div>
+    <el-table-column
+        fixed="right"
+        label="操作"
+        width="100">
+      <template slot-scope="scope">
+        <el-button @click="reservation(scope.row)" type="text" size="small">预约</el-button>
+      </template>
+
+    </el-table-column>
+
+  </el-table>
+<!--    <el-pagination-->
+<!--        background-->
+<!--        :current-page="pageInfo.current"-->
+<!--        :page-size="pageInfo.size"-->
+<!--        layout="prev, pager, next"-->
+<!--        @current-change="handleCurrentChange"-->
+<!--        :total="pageInfo.total">-->
+<!--    </el-pagination>-->
+
+    <el-dialog title="时间预约" :visible.sync="dialogTableVisible">
+      <el-table :data="dialogData">
+        <el-table-column property="reservationDate" label="日期" width="150"></el-table-column>
+        <el-table-column property="place" label="地址"></el-table-column>
+        <el-table-column property="startTime" label="开始时间"></el-table-column>
+        <el-table-column property="endTime" label="结束时间"></el-table-column>
+        <el-table-column
+            fixed="right"
+            label="操作"
+            width="100">
+          <template slot-scope="scope">
+            <el-button @click="addReservation(scope.row)" type="text" size="small">预约</el-button>
+          </template>
+
+        </el-table-column>
+      </el-table>
+    </el-dialog>
+</div>
 </template>
 <script>
-import api from "@/api/index";
 import axios from "axios";
-
-const columns = [
-  {
-    title: "咨询师名称",
-    dataIndex: "username",
-    width: "15%",
-    scopedSlots: { customRender: "username" }
-  },
-  {
-    title: "性别",
-    dataIndex: "gender",
-    width: "10%",
-    scopedSlots: { customRender: "gender" }
-  },
-  {
-    title: "年龄",
-    dataIndex: "age",
-    width: "10%",
-    scopedSlots: { customRender: "age" }
-  },
-  {
-    title: "联系方式",
-    dataIndex: "contactInfo",
-    width: "10%",
-    scopedSlots: { customRender: "contactInfo" }
-  },
-  {
-    title: "专业领域",
-    dataIndex: "contactInfo",
-    width: "10%",
-    scopedSlots: { customRender: "contactInfo" }
-  },
-  {
-    title: "学历",
-    dataIndex: "contactInfo",
-    width: "10%",
-    scopedSlots: { customRender: "contactInfo" }
-  },
-  {
-    title: "毕业学校",
-    dataIndex: "contactInfo",
-    width: "10%",
-    scopedSlots: { customRender: "contactInfo" }
-  },
-  {
-    title: "个人简介",
-    dataIndex: "contactInfo",
-    width: "10%",
-    scopedSlots: { customRender: "contactInfo" }
-  },
-  {
-    title: "工作经历",
-    dataIndex: "contactInfo",
-    width: "10%",
-    scopedSlots: { customRender: "contactInfo" }
-  },
-  {
-    title: "操作",
-    dataIndex: "operation",
-    scopedSlots: { customRender: "operation" }
-  }
-];
+import api from "@/api/index";
 
 export default {
   data() {
     return {
-      data: [],
-      userRowData:{},
-      modalVisible:false,
-      commentKeys:1,
-      columns
+      item: [],
+      userRowData: {},
+      dialogTableVisible: false,
+      dialogData: [],
+      currentPage:1,
+      pageSize:1,
+      pageInfo:{
+        current:1,
+        size:1,
+        total:0
+      }
     };
   },
-  components:{
-
-  },
-  props: {
-
-  },
+  components: {},
   // reservationConsult
   mounted() {
     this.fetchData();
   },
   methods: {
-    fetchData() {
-      axios
-        .get(api.User, {
-          headers: { Authorization: localStorage.token },
-          params:{type:this.rowData}
-        })
-        .then(response => {
-          this.data = response.data.data;
-          this.data.map(ele => (ele.key = ele.id));
-        })
-        .catch(error => {
-          if (error.response.status == 401) {
-            this.$router.push({ path: "/login" });
-          }
-          console.log(error);
+    handleCurrentChange(val) {
+      this.pageInfo.current = val;
+    },
+    reservation(row) {
+      console.log(row.consultInfo.userId);
+
+      //发送请求  获取日期时间内的 预约排版情况
+      axios.get(api.Reservation + "/getConsultReservationInfo", {
+        headers: {Authorization: localStorage.token},
+        params: {
+          consultId: row.consultInfo.userId,
+          currentPage: this.currentPage,
+          pageSize: this.pageSize
+
+        }
+      }).then(res => {
+        console.log(res.data.data);
+        this.dialogData = res.data.data.records;
+      });
+
+      this.dialogTableVisible = true;
+
+
+    },
+    addReservation(row){
+      console.log(row);
+      this.$confirm('是否确定预约该时间段的咨询师?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        axios.post(api.Reservation + "/userAddReservationInfoById/",
+            {
+              id:row.id,
+              userId: localStorage.userId
+            },
+            {headers: {Authorization: localStorage.token}}).then(res => {
+          console.log(res);
+          this.dialogTableVisible = false;
         });
+        this.$message({
+          type: 'success',
+          message: '预约成功!'
+        });
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消预约'
+        });
+      });
+
+    },
+    fetchData() {
+      axios.get(api.User + "/getUserByTypeExtendInfo/1", {
+            headers: {Authorization: localStorage.token}
+          })
+          .then(response => {
+            this.item = response.data.data;
+            console.log(this.item);
+          })
     },
   }
 };

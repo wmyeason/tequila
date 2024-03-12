@@ -138,7 +138,7 @@ export default {
             localStorage.userId = response.data.data.userId
             localStorage.username = response.data.data.username
             localStorage.userStatus = response.data.data.status 
-            localStorage.isConsultant = response.data.data.isConsultant==1;
+            localStorage.isConsultant = response.data.data.isConsultant;
             this.$router.push({ path: "/" });
             // 延迟 1 秒显示欢迎信息
             setTimeout(() => {
