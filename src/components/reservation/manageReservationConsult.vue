@@ -22,7 +22,11 @@
             border
             style="width: 100%">
           <el-table-column
-              fixed
+              prop="reservationDate"
+              label="预约日期"
+              width="250">
+          </el-table-column>
+          <el-table-column
               prop="startTime"
               label="开始时间"
               width="250">
@@ -68,6 +72,7 @@
               <el-date-picker
                   v-model="reservationDate"
                   type="date"
+                  value-format="yyyy-MM-dd"
                   placeholder="选择日期">
               </el-date-picker>
             </el-form-item>
@@ -203,6 +208,15 @@ export default {
       this.dialogTableVisible = true;
     },
     addReservationInfo() {
+      //发送请求前判断开始时间是否在结束时是时候之后
+      if (this.reservationStartHour > this.reservationEndHour) {
+        this.$message({
+          showClose: true,
+          message: '开始时间不能大于结束时间',
+          type: 'error'
+        });
+        return;
+      }
       //发送请求 用于 心理师 排列出时间
       axios.post(api.Reservation + "/consultAddReservationByDate", {
         reservationDate: this.reservationDate,
@@ -213,11 +227,20 @@ export default {
       }, {
         headers: {Authorization: localStorage.token}
       }).then(res => {
-        this.dialogTableVisible = false;
-        this.reservationDate = '';
-        this.reservationStartHour='';
-        this.reservationEndHour='';
-        this.reservationPlace='';
+        if(res.data.code === 0){
+          this.$message({
+            showClose: true,
+            message: res.data.data,
+            type: 'error'
+          });
+        }else{
+          this.dialogTableVisible = false;
+          this.reservationDate = '';
+          this.reservationStartHour='';
+          this.reservationEndHour='';
+          this.reservationPlace='';
+        }
+
         console.log(res);
       });
     },
