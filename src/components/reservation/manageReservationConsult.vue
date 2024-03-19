@@ -209,10 +209,10 @@ export default {
     },
     addReservationInfo() {
       //发送请求前判断开始时间是否在结束时是时候之后
-      if (this.reservationStartHour > this.reservationEndHour) {
+      if (this.reservationStartHour >= this.reservationEndHour) {
         this.$message({
           showClose: true,
-          message: '开始时间不能大于结束时间',
+          message: '结束时间必须大于开始时间',
           type: 'error'
         });
         return;
@@ -239,6 +239,11 @@ export default {
           this.reservationStartHour='';
           this.reservationEndHour='';
           this.reservationPlace='';
+          this.$message({
+            showClose: true,
+            message: '添加预约信息成功!',
+            type: 'success'
+          });
         }
 
         console.log(res);

@@ -54,6 +54,11 @@ export default {
         .then(response => {
           if (response.data.code == 1) {
             this.loading = false;
+            this.$message({
+              showClose: true,
+              message: '编辑公告成功!',
+              type: 'success'
+            });
           }
         })
         .catch(error => {

@@ -225,7 +225,8 @@ export default {
       axios
         .post(api.Register, {
           username: this.inputEmail,
-          password: this.inputPassword
+          password: this.inputPassword,
+          isConsult:false
         })
         .then(response => {
           var code = response.data.code;
