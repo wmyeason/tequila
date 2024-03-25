@@ -73,6 +73,7 @@
                   v-model="reservationDate"
                   type="date"
                   value-format="yyyy-MM-dd"
+                  :picker-options="datePickerOptions"
                   placeholder="选择日期">
               </el-date-picker>
             </el-form-item>
@@ -83,7 +84,7 @@
                   :picker-options="{
                    start: '08:30',
                     step: '00:15',
-                    end: '18:30'
+                    end: '22:30'
                        }">
               </el-time-select>
             </el-form-item>
@@ -94,7 +95,7 @@
                   :picker-options="{
                   start: '08:30',
                   step: '00:15',
-                  end: '18:30',
+                  end: '22:30',
                   minTime: reservationStartHour
                 }">
               </el-time-select>
@@ -134,7 +135,7 @@ export default {
       startTime: '',
       endTime: '',
       currentPage: 1,
-      pageSize: 1,
+      pageSize: 5,
       dialogData: {},
       total:0,
       dialogTableVisible: false,
@@ -142,6 +143,13 @@ export default {
       reservationStartHour: '',//预约的开始时间
       reservationEndHour: '',//预约的结束时间
       reservationPlace: '',//预约地点
+      datePickerOptions: {
+        disabledDate(time) {
+          const today = new Date();
+          const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          return time.getTime() < currentDate.getTime();
+        }
+      },
       pickerOptions: {
         shortcuts: [{
           text: '最近一周',

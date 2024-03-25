@@ -87,7 +87,7 @@ export default {
       dialogTableVisible: false,
       dialogData: [],
       currentPage:1,
-      pageSize:1,
+      pageSize:5,
       pageInfo:{
         current:1,
         size:1,
