@@ -1,7 +1,9 @@
 <template>
   <div class="logo">
     <router-link to="/board">
-      <img src="../assets/logo.png" alt="logosvg" />
+<!--      <img src="../assets/logo.png" alt="logosvg" />-->
+<!--      <img src="../assets/favicon.ico" alt="logosvg" />-->
+      <img src="../assets/logoSchool.png" alt="logosvg" />
       <h1 v-if="showTitle">{{ title }}</h1>
     </router-link>
   </div>
@@ -40,8 +42,8 @@ img {
   color: rgb(0, 0, 0);
   display: inline-block;
   vertical-align: middle;
-  height: 32px;
-  width: 32px;
+  height: 55px;
+  width: 55px;
   /* height: 32px;
   width: 72px; */
 }

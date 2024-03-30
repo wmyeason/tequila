@@ -2,7 +2,7 @@
   <div class="main">
     <a-row :gutter="24">
       <a-col :span="8" :offset="8">
-        <div class="title">CPCP 高校心理咨询平台</div>
+        <div class="title">高校心理咨询平台</div>
         <div class="label">登录</div>
         <a-form id="formLogin" class="user-layout-login" ref="formLogin">
           <a-alert
@@ -216,6 +216,9 @@ export default {
 }
 .main {
   margin: 150px 0;
+  //background-image: url("../../assets/logoSchool.png");
+  background-size: cover; /* 背景图片铺满整个容器 */
+  background-position: center; /* 将背景图片居中 */
 }
 .title {
   font-size: 28px;
