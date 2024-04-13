@@ -4,7 +4,7 @@
     <a-input
       size="large"
       type="text"
-      placeholder="邮箱"
+      placeholder="用户名"
       v-model="inputEmail"
       style="width: 300px; margin: 8px 0"
     ></a-input>
@@ -29,7 +29,7 @@
       type="error"
       showIcon
       style="margin-bottom: 24px;"
-      message="该邮箱已存在"
+      message="该用户名已存在"
     />
 
     <a-button

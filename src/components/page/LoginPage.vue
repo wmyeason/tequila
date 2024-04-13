@@ -22,7 +22,7 @@
                 'username',
                 {
                   rules: [
-                    { required: true, message: '请输入帐户名或邮箱地址' },
+                    { required: true, message: '请输入帐户名' },
                     { validator: handleUsernameOrEmail }
                   ],
                   validateTrigger: 'change'

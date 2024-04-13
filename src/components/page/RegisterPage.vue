@@ -2,7 +2,7 @@
   <div class="main user-layout-register">
     <a-row :gutter="24">
       <a-col :span="8" :offset="8">
-        <div class="title">CPCP 高校心理咨询平台</div>
+        <div class="title">高校心理咨询平台</div>
         <div class="label">注册
         </div>
         <a-form ref="formRegister" :form="form" id="formRegister">
@@ -10,13 +10,13 @@
             <a-input
               size="large"
               type="text"
-              placeholder="邮箱"
+              placeholder="用户名"
               v-model="inputEmail"
               v-decorator="[
                 'email',
                 {
                   rules: [
-                    { required: true, type: 'email', message: '请输入邮箱地址' }
+                    { required: true,  message: '请输入用户名,至少六个字符',min:6 }
                   ],
                   validateTrigger: ['change', 'blur']
                 }
@@ -57,7 +57,7 @@
                   'password',
                   {
                     rules: [
-                      { required: true, message: '至少6位密码，区分大小写' },
+                      { required: true, message: '至少6位密码，区分大小写',min:6 },
                       { validator: this.handlePasswordLevel }
                     ],
                     validateTrigger: ['change', 'blur']
@@ -92,7 +92,7 @@
                 type="error"
                 showIcon
                 style="margin-bottom: 24px;"
-                message="该邮箱已存在"
+                message="该用户名已存在"
               />
 
           <a-form-item>
@@ -197,7 +197,7 @@ export default {
         if (level === 0) {
           this.state.percent = 10;
         }
-        callback(new Error("密码强度不够"));
+        callback(new Error("密码强度不够，需包含大小写字母"));
       }
     },
 
@@ -222,6 +222,15 @@ export default {
     },
 
     doRegister() {
+      if(this.inputEmail.length<6||this.inputPassword<6||this.state.percent <= 30){
+        this.$notification["error"]({
+          message: "错误",
+          description: "用户名或密码不能少于6位",
+          duration: 4
+        });
+        return ;
+      }
+
       axios
         .post(api.Register, {
           username: this.inputEmail,

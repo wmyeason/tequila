@@ -10,14 +10,23 @@
         width="50">
     </el-table-column>
     <el-table-column
-        prop="userEntity.username"
+        prop="userEntity"
         label="咨询师名称"
         width="120">
+      <template slot-scope="{ row }">
+        <span v-if="row.userEntity.nickname">{{ row.userEntity.nickname }}</span>
+        <span v-else>{{ row.userEntity.username }}</span>
+      </template>
     </el-table-column>
     <el-table-column
-        prop="userEntity.gender"
+        prop="userEntity"
         label="性别"
         width="120">
+      <template slot-scope="{ row }">
+        <span v-if="row.userEntity.gender=='FEMALE'">女</span>
+        <span v-else-if="row.userEntity.gender=='MALE'">男</span>
+        <span v-else>未知</span>
+      </template>
     </el-table-column>
     <el-table-column
         prop="userEntity.age"

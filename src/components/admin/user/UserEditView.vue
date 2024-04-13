@@ -2,12 +2,23 @@
   <div class="main user-layout-register">
     <div class="title">编辑用户</div>
     <div>
-      <span>用户名/邮箱</span>
+      <span>用户名</span>
       <a-input
           size="large"
           type="text"
-          placeholder="用户名/邮箱"
+          placeholder="用户名"
           v-model="editEmail"
+          style="width: 300px; margin: 8px 0;margin-left: 1px;"
+      ></a-input>
+    </div>
+
+    <div>
+      <span>昵称</span>
+      <a-input
+          size="large"
+          type="text"
+          placeholder="昵称"
+          v-model="editNickName"
           style="width: 300px; margin: 8px 0;margin-left: 1px;"
       ></a-input>
     </div>
@@ -123,7 +134,7 @@
         type="error"
         showIcon
         style="margin-bottom: 24px;"
-        message="该邮箱已存在"
+        message="该用户名已存在"
     />
 
   </div>
@@ -141,6 +152,7 @@ export default {
   data() {
     return {
       editEmail: "",
+      editNickName: "",
       editPassword: "",
       editAge: "",
       editSex: "",
@@ -174,6 +186,7 @@ export default {
         data = {
           id: this.editId + '',
           username: this.editEmail,
+          nickName: this.editNickName,
           password: this.editPassword,
           age: this.editAge,
           sex: this.editSex,
@@ -192,6 +205,7 @@ export default {
         data = {
           id: this.editId + '',
           username: this.editEmail,
+          nickName: this.editNickName,
           password: this.editPassword,
           age: this.editAge,
           sex: this.editSex,
@@ -258,6 +272,7 @@ export default {
             .then(response => {
               if (response.data.code == 1) {
                 this.editEmail = response.data.data.username
+                this.editNickName = response.data.data.nickname
                 this.editPassword = '';
                 this.editAge = response.data.data.age
                 this.editId = response.data.data.id
@@ -279,6 +294,7 @@ export default {
     },
     initBasicData(){
       this.editEmail = this.rowData.username
+      this.editNickName = this.rowData.nickname
       this.editPassword = '';
       this.editAge = this.rowData.age
       this.editId = this.rowData.id

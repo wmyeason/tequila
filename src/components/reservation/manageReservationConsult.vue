@@ -45,6 +45,9 @@
               prop="userName"
               label="预约人"
               width="250">
+            <template slot-scope="{ row }">
+              {{ row.nickName ? row.nickName : (row.userName ? row.userName : '未知') }}
+            </template>
           </el-table-column>
           <el-table-column
               label="操作"

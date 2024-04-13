@@ -49,7 +49,7 @@ import UserEdit from "./UserEditView.vue";
 
 const columns = [
   {
-    title: "用户名/邮箱",
+    title: "用户名",
     dataIndex: "username",
     width: "25%",
     scopedSlots: { customRender: "username" }
