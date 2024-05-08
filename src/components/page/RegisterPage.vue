@@ -1,11 +1,12 @@
 <template>
   <div class="main user-layout-register">
-    <a-row :gutter="24">
+    <a-row  class="aRow" :gutter="24">
       <a-col :span="8" :offset="8">
+        <div class="loginPac">
         <div class="title">高校心理咨询平台</div>
         <div class="label">注册
         </div>
-        <a-form ref="formRegister" :form="form" id="formRegister">
+        <a-form ref="formRegister" class="user-layout-login" :form="form" id="formRegister">
           <a-form-item>
             <a-input
               size="large"
@@ -111,6 +112,7 @@
             >
           </a-form-item>
         </a-form>
+        </div>
       </a-col>
     </a-row>
   </div>
@@ -318,13 +320,35 @@ export default {
   }
 }
 .main {
-  margin: 150px 0;
+  height: 95vh;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../assets/login.png");
+  background-size: cover; /* 背景图片铺满整个容器 */
+  background-position: center; /* 将背景图片居中 */
+}
+.aRow{
+  top: 200px;
 }
 .title {
   font-size: 28px;
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(63, 90, 199, 0.66);
   font-weight: 700;
   margin-bottom: 24px;
+  text-align: center;
+}
+.loginPac{
+  border: 1px solid #d9d9d9;
+  background-color: #0093e9;
+  background-image: linear-gradient(
+      200deg,
+      #d7e4ec 0%,
+      #e4ece2 50%,
+      #ffffff 100%
+  );
+  border-radius: 1px;
+
+  height: 100%;
 }
 
 .label {

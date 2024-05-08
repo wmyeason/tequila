@@ -60,7 +60,7 @@
         </a-menu-item>
       </a-menu>
     </a-layout-header>
-    <a-layout-content style="margin: 48px 0 0 0">
+    <a-layout-content style="margin: 48px 0 0 0" class="backPNG">
       <a-row>
         <a-col :md="{ span: 16, offset: 4 }" :xs="{ span: 20, offset: 2 }">
           <div
@@ -114,7 +114,14 @@ export default {
   margin: 0 8px;
   line-height: 1.75em;
 }
-
+.backPNG{
+  height: 85vh;
+  justify-content: center;
+  align-items: center;
+  background-image: url("../../assets/back.png");
+  background-size: cover; /* 背景图片铺满整个容器 */
+  background-position: center; /* 将背景图片居中 */
+}
 .appendix {
   font-size: 14px;
   width: 100%;

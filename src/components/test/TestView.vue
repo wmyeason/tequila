@@ -1,5 +1,5 @@
 <template>
-  <div id="test">
+  <div id="test"  class="subjectPNG">
     <a-row>
       <a-col :span="12" :offset="6">
         <div class="title" style="margin: 16px; width: 100%;text-align: center;">心理测试</div>
@@ -84,6 +84,14 @@ export default {
 <style>
 #test {
   margin: 0 0;
+}
+.subjectPNG{
+  //height: 95vh;
+  //justify-content: center;
+  //align-items: center;
+  background-image: url("../../assets/subject.png");
+  background-size: cover; /* 背景图片铺满整个容器 */
+  background-position: center; /* 将背景图片居中 */
 }
 .question {
   font-size: 18px;
