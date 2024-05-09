@@ -50,7 +50,7 @@
         label="操作"
         width="100">
       <template slot-scope="scope">
-        <el-button @click="reservation(scope.row)" type="text" size="small">预约</el-button>
+        <el-button @click="reservation(scope.row)" type="primary" size="small" icon="el-icon-circle-check">预约</el-button>
       </template>
 
     </el-table-column>

@@ -13,7 +13,7 @@
           left: 0
         }"
       >
-        <Logo title="CPCP 后台系统" :showTitle="!collapsed"></Logo>
+        <Logo title="校园心理健康后台" :showTitle="!collapsed"></Logo>
         <a-menu theme="dark" mode="inline" :defaultSelectedKeys="['1']">
           <a-menu-item key="1">
             <router-link to="/admin/board">

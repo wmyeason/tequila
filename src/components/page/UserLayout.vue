@@ -72,7 +72,7 @@
       </a-row>
     </a-layout-content>
     <a-layout-footer style="text-align: center">
-      CPCP 高校心理资讯平台 ©2024
+      校园心理资讯平台 ©2024
     </a-layout-footer>
   </a-layout>
 </template>

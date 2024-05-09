@@ -1,25 +1,25 @@
 <template>
   <div class="main user-layout-register">
     <div class="title">编辑用户</div>
-    <div>
+    <div style="display: flex; align-items: center;">
       <span>用户名</span>
       <a-input
           size="large"
           type="text"
           placeholder="用户名"
           v-model="editEmail"
-          style="width: 300px; margin: 8px 0;margin-left: 1px;"
+          style="width: 300px; margin: 8px 0;margin-left: 35px;"
       ></a-input>
     </div>
 
-    <div>
+    <div style="display: flex; align-items: center;">
       <span>昵称</span>
       <a-input
           size="large"
           type="text"
           placeholder="昵称"
           v-model="editNickName"
-          style="width: 300px; margin: 8px 0;margin-left: 1px;"
+          style="width: 300px; margin: 8px 0;margin-left: 50px;"
       ></a-input>
     </div>
 
