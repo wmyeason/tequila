@@ -8,13 +8,13 @@
             type="daterange"
             align="right"
             unlink-panels
-            range-separator="至"
+            range-separator="-"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             :picker-options="pickerOptions">
         </el-date-picker>
-        <el-button type="primary" @click="getReservationInfo" round>查询</el-button>
-        <el-button type="primary" @click="addReservation" round>添加</el-button>
+        <el-button type="primary" @click="getReservationInfo" round icon="el-icon-search">查询</el-button>
+        <el-button type="primary" @click="addReservation"  round icon="el-icon-circle-plus-outline">添加</el-button>
       </div>
       <div>
         <el-table

@@ -76,7 +76,7 @@
             label="操作"
             width="100">
           <template slot-scope="scope">
-            <el-button @click="addReservation(scope.row)" type="text" size="small">预约</el-button>
+            <el-button @click="addReservation(scope.row)" type="primary" size="small" icon="el-icon-check">预约</el-button>
           </template>
 
         </el-table-column>

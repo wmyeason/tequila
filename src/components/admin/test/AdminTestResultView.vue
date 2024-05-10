@@ -23,7 +23,8 @@
       <template slot="operation" slot-scope="text, record">
         <div class="editable-row-operations">
           <span>
-            <a @click="() => getContact(record.userId)">联系他</a>
+<!--            <a @click="() => getContact(record.userId)">联系他</a>-->
+            <el-button @click="getContact(record.userId)" type="primary" size="small" icon="el-icon-chat-line-round">联系他</el-button>
           </span>
         </div>
       </template>
