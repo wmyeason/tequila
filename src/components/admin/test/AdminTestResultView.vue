@@ -42,10 +42,10 @@ const columns = [
     scopedSlots: { customRender: "id" }
   },
   {
-    title: "用户ID",
-    dataIndex: "userId",
+    title: "用户",
+    dataIndex: "username",
     width: "10%",
-    scopedSlots: { customRender: "userId" }
+    scopedSlots: { customRender: "username" }
   },
   {
     title: "分数",
